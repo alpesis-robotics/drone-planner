@@ -1,5 +1,7 @@
 # Drone Planner
 
+
+
 ## Step 1. Simulator
 
 Download the simulator at the [release page](https://github.com/udacity/FCND-Simulator-Releases/releases),

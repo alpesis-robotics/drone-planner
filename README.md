@@ -124,6 +124,23 @@ define what kind of the path the drone would fly.
 
 ### How motion planning works
 
+Let's detail the steps in ``plan_path()``:
+
+- Step 1. Update the ``flight_state`` as ``PLANNING``, and print out ``Searching for a path ...`` on
+the console;
+- Step 2. Initialize the target position: ``TARGET_ALTITUDE``, ``SAFETY_DISTANCE``, ``self.target_position[2]``;
+- Step 3. Print out the initialized positions: ``global_home``, ``global_position``, ``local_position``;
+- Step 4. Read the waypoints from ``colliders.csv`` by skipping the first two rows;
+- Step 5. Create a grid representation of a 2D configuration space by calling the function ``create_grid()``,
+and extract the ``north_offset`` and ``east_offset`` values, then print them out on the console;
+- Step 6. Setup the ``grid_start`` and ``grid_goal`` by the ``north_offset`` and ``east_offset``;
+- Step 7. Generate a path from A\* search by the extracted grid, start position, goal position and heuristic
+function using the function ``a_star()`` and ``heuristic()``;
+- Step 8. Extract waypoints from a given path at step 7 and assign back to ``self.waypoints``;
+- Step 9. Send the waypoints back by ``self.send_waypoints()``.
+
+
+### Key function descriptions
 
 Key steps in ``motion_planning.py``:
 
@@ -138,6 +155,7 @@ Key steps in ``motion_planning.py``:
 # local velocity and state, the events would be responded to the state updated correspondingly.
 drone = MotionPlanning()
 
+# update the flying path
 drone.plan_path()
 ```
 
@@ -145,11 +163,11 @@ Functions provided in ``planning_utils.py``:
 
 - ``create_grid()``: creates a grid representation of a 2D configuration space based on given
 obstacle data, drone altitude and safety distance;
-- ``Action()``: the action of the directions west, east, north and south that contains the value
-of the current grid position and its cost;
-- ``valid_actions()``: a list of valid actions based on a given grid and current node;
 - ``a_star()``: A* algorithm for searching the path;
-- ``heuristic()``: the heursitic function.
+    - ``heuristic()``: the heursitic function;
+    - ``valid_actions()``: a list of valid actions based on a given grid and current node;
+        - ``Action()``: the action of the directions west, east, north and south that contains the
+value of the current grid position and its cost.
 
 
 ### Simulation
@@ -223,7 +241,10 @@ manual transition
 Closing connection ...
 ```
 
-The quadcopter flies a jerky path of waypoints to the northeast for about 10m then land.
+Therefore, at the current case, it is extracted 21 waypoints from the path searching from a given grid,
+start position and goal position using heuristic function. The quadcopter flies a jerky path of these
+waypoints to the northeast for about 10m then land.
+
 
 ![Step6_Motion](./images/Step6_Motion.png)
 

@@ -114,7 +114,10 @@ class MotionPlanning(Drone):
     def plan_path(self):
         self.flight_state = States.PLANNING
         print("Searching for a path ...")
-        TARGET_ALTITUDE = 50
+        # target: [goal_lat, goal_lon, target_alt]
+        target = open('target.csv', 'r').readline().strip().split(',')
+        TARGET_GLOBAL = [float(target[0]), float(target[1]), int(target[2])]
+        TARGET_ALTITUDE = TARGET_GLOBAL[2]
         SAFETY_DISTANCE = 5
 
         self.target_position[2] = TARGET_ALTITUDE
@@ -149,7 +152,7 @@ class MotionPlanning(Drone):
         # Set goal as some arbitrary position on the grid
         grid_goal = (-north_offset + 10, -east_offset + 10)
         # TODO: adapt to set goal as latitude / longitude position and convert
-        goal_position_global = [-122.39300, 37.790000, self._altitude]
+        goal_position_global = [TARGET_GLOBAL[1], TARGET_GLOBAL[0], self._altitude]
         goal_position_local = global_to_local(goal_position_global, self.global_home) 
         grid_goal = (int(goal_position_local[0] - north_offset), int(goal_position_local[1] - east_offset))
 

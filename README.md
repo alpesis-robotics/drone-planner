@@ -69,3 +69,35 @@ $ git clone https://github.com/udacity/FCND-Motion-Planning
 Integrated into the project with some modifications as below:
 
 ![Step3_Reposity](./images/Step3_Repository.png)
+
+## Step 4. Verification
+
+Activate the environement created at step 2, and run the ``backyard_flyer_solution.py``
+to test the setup.
+
+```
+$ source activate drone-planner
+$ python backyard_flyer_solution.py
+Logs/TLog.txt
+Logs/NavLog.txt
+starting connection
+arming transition
+takeoff transition
+Setting Home
+waypoint transition
+target position [10.0, 0.0, 3.0]
+waypoint transition
+target position [10.0, 10.0, 3.0]
+waypoint transition
+target position [0.0, 10.0, 3.0]
+waypoint transition
+target position [0.0, 0.0, 3.0]
+landing transition
+disarm transition
+manual transition
+Closing connection ...
+```
+
+As expected, the quadcopter take off, fly a square rule and land.
+
+![Step4_Verification](./images/Step4_Verification.png)

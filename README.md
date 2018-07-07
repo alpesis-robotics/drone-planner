@@ -254,3 +254,5 @@ waypoints to the northeast for about 10m then land.
 ![Step6_Motion](./images/Step6_Motion.png)
 
 ## Step 7. Planner
+
+![Step7_Planning](./images/Step7_Planning.gif)

@@ -113,7 +113,7 @@ Relevant files:
 - colliders.csv               # the data of 2.5D map
 ```
 
-## Step 6. Explanation
+## Step 6. Motion
 
 
 
@@ -188,4 +188,6 @@ Closing connection ...
 
 The quadcopter flies a jerky path of waypoints to the northeast for about 10m then land.
 
-![Step6_Explanation](./images/Step6_Explanation.png)
+![Step6_Motion](./images/Step6_Motion.png)
+
+## Step 7. Planner

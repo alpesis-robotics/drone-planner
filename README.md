@@ -101,3 +101,14 @@ Closing connection ...
 As expected, the quadcopter take off, fly a square rule and land.
 
 ![Step4_Verification](./images/Step4_Verification.png)
+
+## Step 5. Inspection
+
+Inspect the relevant files:
+
+```
+Relevant files:
+- motion_planning.py          # the motion planning script, student task in plan_path()
+- planning_utils.py           # the functions of planning utilities
+- colliders.csv               # the data of 2.5D map
+```

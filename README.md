@@ -354,6 +354,10 @@ Target altitude and the latitude and longitude for goal position in ``target.csv
 37.796490,-122.39499,50
 ```
 
+Please note that tune the last three digits of the goal latitude and longitude if a new target position
+is desired; keep the high altitude would be helpful for searching for a path, but it is a trade-off to
+get a valid path and have a visible city landscape.
+
 Open the simulator and run ``python motion_planning.py``, it works!
 
 ![Step7_Planning](./images/Step7_Planning_01.png)

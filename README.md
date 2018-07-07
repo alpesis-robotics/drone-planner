@@ -115,9 +115,14 @@ Relevant files:
 
 ## Step 6. Motion
 
-In ``backyard_flyer_solution.py`` and ``motion_planning.py``, the process of the missions
-(``arm -> takeoff -> transition -> landing -> disarm -> manual``) is the same, however,
-the drone flies a box path at the backyard, while a jerky route in the city, is because
+In ``backyard_flyer_solution.py`` and ``motion_planning.py``, the process of the missions is
+the same as
+
+```
+arm -> takeoff -> transition -> landing -> disarm -> manual
+```
+
+However, the drone flies a box path at the backyard, while a jerky route in the city, is because
 the waypoints setup as a box (function ``calculate_box()``) in the ``backyard_flyer_solution.py``,
 while as a jerky path (function ``plan_path()``) in the ``motion_planning.py``. The waypoints
 define what kind of the path the drone would fly.
@@ -241,7 +246,7 @@ manual transition
 Closing connection ...
 ```
 
-Therefore, at the current case, it is extracted 21 waypoints from the path searching from a given grid,
+Therefore, at the current case, 21 waypoints are extracted from the path searching from a given grid,
 start position and goal position using heuristic function. The quadcopter flies a jerky path of these
 waypoints to the northeast for about 10m then land.
 

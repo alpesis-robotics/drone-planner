@@ -115,7 +115,44 @@ Relevant files:
 
 ## Step 6. Motion
 
+In ``backyard_flyer_solution.py`` and ``motion_planning.py``, the process of the missions
+(``arm -> takeoff -> transition -> landing -> disarm -> manual``) is the same, however,
+the drone flies a box path at the backyard, while a jerky route in the city, is because
+the waypoints setup as a box (function ``calculate_box()``) in the ``backyard_flyer_solution.py``,
+while as a jerky path (function ``plan_path()``) in the ``motion_planning.py``. The waypoints
+define what kind of the path the drone would fly.
 
+### How motion planning works
+
+
+Key steps in ``motion_planning.py``:
+
+```
+# initialize the drone that contains the values:
+# - target_position: numpy array, default value [0.0, 0.0, 0.0];
+# - waypoints: a list, default value [];
+# - in_mission: boolean, default value true;
+# - check_state: a dictionary, default value {};
+# - flight_state: an enum class of states, default value States.MANUAL
+# - register_callback(): the callback functions of the events, here are local position,
+# local velocity and state, the events would be responded to the state updated correspondingly.
+drone = MotionPlanning()
+
+drone.plan_path()
+```
+
+Functions provided in ``planning_utils.py``:
+
+- ``create_grid()``: creates a grid representation of a 2D configuration space based on given
+obstacle data, drone altitude and safety distance;
+- ``Action()``: the action of the directions west, east, north and south that contains the value
+of the current grid position and its cost;
+- ``valid_actions()``: a list of valid actions based on a given grid and current node;
+- ``a_star()``: A* algorithm for searching the path;
+- ``heuristic()``: the heursitic function.
+
+
+### Simulation
 
 Run the script ``motion_planning.py``:
 

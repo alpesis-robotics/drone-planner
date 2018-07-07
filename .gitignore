@@ -7,3 +7,6 @@
 *.swp
 *.swm
 *.swn
+
+# ipython
+.ipynb_checkpoints

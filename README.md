@@ -66,4 +66,6 @@ Clone the repository to the local destination.
 $ git clone https://github.com/udacity/FCND-Motion-Planning
 ```
 
+Integrated into the project with some modification as below:
 
+![Step3_Reposity][./images/Step3_Repository.png]

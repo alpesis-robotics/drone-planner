@@ -112,3 +112,80 @@ Relevant files:
 - planning_utils.py           # the functions of planning utilities
 - colliders.csv               # the data of 2.5D map
 ```
+
+## Step 6. Explanation
+
+
+
+Run the script ``motion_planning.py``:
+
+```
+$ source activate drone-planner
+$ python motion_planning.py
+```
+
+The console shows the logs:
+
+```
+Logs/TLog.txt
+Logs/NavLog.txt
+starting connection
+arming transition
+Searching for a path ...
+global home [-122.39745   37.79248    0.     ], position [-122.3974516   37.7924789    0.156    ], local position [-0.11443461 -0.1506926  -0.1565406 ]
+North offset = -316, east offset = -445
+Local Start and Goal:  (316, 445) (326, 455)
+Found a path.
+Sending waypoints to simulator ...
+takeoff transition
+waypoint transition
+target position [0, 0, 5, 0]
+waypoint transition
+target position [0, 1, 5, 0]
+waypoint transition
+target position [1, 1, 5, 0]
+waypoint transition
+target position [1, 2, 5, 0]
+waypoint transition
+target position [2, 2, 5, 0]
+waypoint transition
+target position [2, 3, 5, 0]
+waypoint transition
+target position [3, 3, 5, 0]
+waypoint transition
+target position [3, 4, 5, 0]
+waypoint transition
+target position [4, 4, 5, 0]
+waypoint transition
+target position [4, 5, 5, 0]
+waypoint transition
+target position [5, 5, 5, 0]
+waypoint transition
+target position [5, 6, 5, 0]
+waypoint transition
+target position [6, 6, 5, 0]
+waypoint transition
+target position [6, 7, 5, 0]
+waypoint transition
+target position [7, 7, 5, 0]
+waypoint transition
+target position [7, 8, 5, 0]
+waypoint transition
+target position [8, 8, 5, 0]
+waypoint transition
+target position [8, 9, 5, 0]
+waypoint transition
+target position [9, 9, 5, 0]
+waypoint transition
+target position [9, 10, 5, 0]
+waypoint transition
+target position [10, 10, 5, 0]
+landing transition
+disarm transition
+manual transition
+Closing connection ...
+```
+
+The quadcopter flies a jerky path of waypoints to the northeast for about 10m then land.
+
+![Step6_Explanation](./images/Step6_Explanation.png)

@@ -1,8 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Solution to the Backyard Flyer Project.
-"""
-
 import time
 from enum import Enum
 
@@ -73,8 +69,7 @@ class BackyardFlyer(Drone):
 
     def calculate_box(self):
         print("Setting Home")
-        #local_waypoints = [[10.0, 0.0, 3.0], [10.0, 10.0, 3.0], [0.0, 10.0, 3.0], [0.0, 0.0, 3.0]]
-        local_waypoints = trajectories.waypoints.square()
+        local_waypoints = trajectories.waypoints.circle(8, 10, 20.0)
         return local_waypoints
 
     def arming_transition(self):

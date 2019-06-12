@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
-import time
 from enum import Enum
 
 import numpy as np
 
 from udacidrone import Drone
-from udacidrone.connection import MavlinkConnection, WebSocketConnection  # noqa: F401
 from udacidrone.messaging import MsgID
 
+import settings.city as settings
 import trajectories.waypoints
 
 
@@ -114,7 +113,7 @@ class BackyardFlyer(Drone):
         self.flight_state = States.MANUAL
 
     def start(self):
-        self.start_log("Logs", "NavLog.txt")
+        self.start_log(settings.LOG_PATH, settings.LOG_NAME)
         # self.connect()
 
         print("starting connection")
@@ -127,11 +126,3 @@ class BackyardFlyer(Drone):
         #    pass
 
         self.stop_log()
-
-
-if __name__ == "__main__":
-    conn = MavlinkConnection('tcp:127.0.0.1:5760', threaded=False, PX4=False)
-    #conn = WebSocketConnection('ws://127.0.0.1:5760')
-    drone = BackyardFlyer(conn)
-    time.sleep(2)
-    drone.start()

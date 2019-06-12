@@ -1,17 +1,14 @@
-import argparse
-import time
 import msgpack
 from enum import Enum, auto
 
 import numpy as np
-
 from udacidrone import Drone
-from udacidrone.connection import MavlinkConnection
 from udacidrone.messaging import MsgID
 from udacidrone.frame_utils import global_to_local
 
 import settings.city as settings
-from planning_utils import a_star, heuristic, create_grid, prune_path
+from maps.grid import create_grid
+from trajectories.search import a_star, heuristic, prune_path
 
 
 class States(Enum):
@@ -24,7 +21,7 @@ class States(Enum):
     PLANNING = auto()
 
 
-class MotionPlanning(Drone):
+class CityFlyer(Drone):
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -54,11 +51,13 @@ class MotionPlanning(Drone):
                     if np.linalg.norm(self.local_velocity[0:2]) < 1.0:
                         self.landing_transition()
 
+
     def velocity_callback(self):
         if self.flight_state == States.LANDING:
             if self.global_position[2] - self.global_home[2] < 0.1:
                 if abs(self.local_position[2]) < 0.01:
                     self.disarming_transition()
+
 
     def state_callback(self):
         if self.in_mission:
@@ -73,16 +72,19 @@ class MotionPlanning(Drone):
                 if ~self.armed & ~self.guided:
                     self.manual_transition()
 
+
     def arming_transition(self):
         self.flight_state = States.ARMING
         print("arming transition")
         self.arm()
         self.take_control()
 
+
     def takeoff_transition(self):
         self.flight_state = States.TAKEOFF
         print("takeoff transition")
         self.takeoff(self.target_position[2])
+
 
     def waypoint_transition(self):
         self.flight_state = States.WAYPOINT
@@ -94,10 +96,12 @@ class MotionPlanning(Drone):
                           self.target_position[2],
                           self.target_position[3])
 
+
     def landing_transition(self):
         self.flight_state = States.LANDING
         print("landing transition")
         self.land()
+
 
     def disarming_transition(self):
         self.flight_state = States.DISARMING
@@ -105,16 +109,19 @@ class MotionPlanning(Drone):
         self.disarm()
         self.release_control()
 
+
     def manual_transition(self):
         self.flight_state = States.MANUAL
         print("manual transition")
         self.stop()
         self.in_mission = False
 
+
     def send_waypoints(self):
         print("Sending waypoints to simulator ...")
         data = msgpack.dumps(self.waypoints)
         self.connection._master.write(data)
+
 
     def plan_path(self):
         self.flight_state = States.PLANNING
@@ -191,16 +198,3 @@ class MotionPlanning(Drone):
         #    pass
 
         self.stop_log()
-
-
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--port', type=int, default=5760, help='Port number')
-    parser.add_argument('--host', type=str, default='127.0.0.1', help="host address, i.e. '127.0.0.1'")
-    args = parser.parse_args()
-
-    conn = MavlinkConnection('tcp:{0}:{1}'.format(args.host, args.port), timeout=60)
-    drone = MotionPlanning(conn)
-    time.sleep(1)
-
-    drone.start()

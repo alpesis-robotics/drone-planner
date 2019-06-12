@@ -10,7 +10,7 @@ from udacidrone.connection import MavlinkConnection
 from udacidrone.messaging import MsgID
 from udacidrone.frame_utils import global_to_local
 
-import settings
+import settings.city as settings
 from planning_utils import a_star, heuristic, create_grid, prune_path
 
 

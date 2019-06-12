@@ -6,7 +6,7 @@ from udacidrone import Drone
 from udacidrone.messaging import MsgID
 from udacidrone.frame_utils import global_to_local
 
-import settings.city as settings
+import settings.common as settings
 from maps.grid import create_grid
 from trajectories.search import a_star, heuristic, prune_path
 

@@ -6,7 +6,7 @@ import numpy as np
 from udacidrone import Drone
 from udacidrone.messaging import MsgID
 
-import settings.city as settings
+import settings.common as settings
 import trajectories.waypoints
 
 

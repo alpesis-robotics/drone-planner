@@ -1,4 +1,4 @@
-LOG_PATH = "../Logs"
+LOG_PATH = "./Logs"
 LOG_NAME = "NavLog.txt"
 
 COLLIDERS_CSV = "../data/colliders/colliders.csv"

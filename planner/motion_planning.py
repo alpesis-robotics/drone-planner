@@ -5,11 +5,13 @@ from enum import Enum, auto
 
 import numpy as np
 
-from planning_utils import a_star, heuristic, create_grid, prune_path
 from udacidrone import Drone
 from udacidrone.connection import MavlinkConnection
 from udacidrone.messaging import MsgID
 from udacidrone.frame_utils import global_to_local
+
+import settings
+from planning_utils import a_star, heuristic, create_grid, prune_path
 
 
 class States(Enum):
@@ -87,7 +89,10 @@ class MotionPlanning(Drone):
         print("waypoint transition")
         self.target_position = self.waypoints.pop(0)
         print('target position', self.target_position)
-        self.cmd_position(self.target_position[0], self.target_position[1], self.target_position[2], self.target_position[3])
+        self.cmd_position(self.target_position[0],
+                          self.target_position[1],
+                          self.target_position[2],
+                          self.target_position[3])
 
     def landing_transition(self):
         self.flight_state = States.LANDING
@@ -115,7 +120,7 @@ class MotionPlanning(Drone):
         self.flight_state = States.PLANNING
         print("Searching for a path ...")
         # target: [goal_lat, goal_lon, target_alt]
-        target = open('target.csv', 'r').readline().strip().split(',')
+        target = open(settings.TARGET_CSV, 'r').readline().strip().split(',')
         TARGET_GLOBAL = [float(target[0]), float(target[1]), int(target[2])]
         TARGET_ALTITUDE = TARGET_GLOBAL[2]
         SAFETY_DISTANCE = 5
@@ -123,7 +128,7 @@ class MotionPlanning(Drone):
         self.target_position[2] = TARGET_ALTITUDE
 
         # read lat0, lon0 from colliders into floating point values
-        lat0, lon0 = open('colliders.csv', 'r').readline().strip().split(',')
+        lat0, lon0 = open(settings.COLLIDERS_CSV, 'r').readline().strip().split(',')
         lat0 = float(lat0[5:])
         lon0 = float(lon0[6:])    
  
@@ -140,7 +145,7 @@ class MotionPlanning(Drone):
             self.global_position,
             self.local_position))
         # Read in obstacle map
-        data = np.loadtxt('colliders.csv', delimiter=',', dtype='Float64', skiprows=2)
+        data = np.loadtxt(settings.COLLIDERS_CSV, delimiter=',', dtype='Float64', skiprows=2)
         
         # Define a grid for a particular altitude and safety margin around obstacles
         grid, north_offset, east_offset = create_grid(data, TARGET_ALTITUDE, SAFETY_DISTANCE)
@@ -176,7 +181,7 @@ class MotionPlanning(Drone):
         self.send_waypoints()
 
     def start(self):
-        self.start_log("Logs", "NavLog.txt")
+        self.start_log(settings.LOG_PATH, settings.LOG_NAME)
 
         print("starting connection")
         self.connection.start()
